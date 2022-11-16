@@ -8,7 +8,7 @@ namespace Chess.Pieces
 {
     internal class Knight : Piece
     {
-        public Knight(int x, int y, PieceColor color) : base(x, y, color, PieceType.Knight)
+        public Knight(PieceColor color) : base(color, PieceType.Knight)
         {
 
         }

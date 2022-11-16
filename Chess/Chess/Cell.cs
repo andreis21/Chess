@@ -9,11 +9,11 @@ namespace Chess
 {
     internal class Cell
     {
-        public Piece? piece;
+        public Piece? Piece;
 
         public Cell(Piece piece = null)
         {
-            this.piece = piece;
+            this.Piece = piece;
         }
     }
 }

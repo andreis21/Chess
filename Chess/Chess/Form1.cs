@@ -99,6 +99,8 @@ namespace Chess
             {
                 _pickedColor = PieceColor.Black;
             }
+            Table table = Table.GetInstance();
+            table.SetupTableForColor(_pickedColor);
         }
     }
 }

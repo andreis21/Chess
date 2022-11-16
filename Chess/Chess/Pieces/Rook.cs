@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Chess.Pieces
 {
-    internal class Pawn : Piece
+    internal class Rook : Piece
     {
-        public Pawn(PieceColor color) : base(color, PieceType.Pawn)
+        public Rook(PieceColor color) : base(color, PieceType.Rook)
         {
         }
 
