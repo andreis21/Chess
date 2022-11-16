@@ -1,0 +1,17 @@
+D:\Proiecte\OOP\Chess\Chess\Chess\bin\Debug\net6.0-windows\Chess.exe
+D:\Proiecte\OOP\Chess\Chess\Chess\bin\Debug\net6.0-windows\Chess.deps.json
+D:\Proiecte\OOP\Chess\Chess\Chess\bin\Debug\net6.0-windows\Chess.runtimeconfig.json
+D:\Proiecte\OOP\Chess\Chess\Chess\bin\Debug\net6.0-windows\Chess.dll
+D:\Proiecte\OOP\Chess\Chess\Chess\bin\Debug\net6.0-windows\Chess.pdb
+D:\Proiecte\OOP\Chess\Chess\Chess\obj\Debug\net6.0-windows\Chess.csproj.AssemblyReference.cache
+D:\Proiecte\OOP\Chess\Chess\Chess\obj\Debug\net6.0-windows\Chess.mainWindow.resources
+D:\Proiecte\OOP\Chess\Chess\Chess\obj\Debug\net6.0-windows\Chess.csproj.GenerateResource.cache
+D:\Proiecte\OOP\Chess\Chess\Chess\obj\Debug\net6.0-windows\Chess.GeneratedMSBuildEditorConfig.editorconfig
+D:\Proiecte\OOP\Chess\Chess\Chess\obj\Debug\net6.0-windows\Chess.AssemblyInfoInputs.cache
+D:\Proiecte\OOP\Chess\Chess\Chess\obj\Debug\net6.0-windows\Chess.AssemblyInfo.cs
+D:\Proiecte\OOP\Chess\Chess\Chess\obj\Debug\net6.0-windows\Chess.csproj.CoreCompileInputs.cache
+D:\Proiecte\OOP\Chess\Chess\Chess\obj\Debug\net6.0-windows\Chess.dll
+D:\Proiecte\OOP\Chess\Chess\Chess\obj\Debug\net6.0-windows\refint\Chess.dll
+D:\Proiecte\OOP\Chess\Chess\Chess\obj\Debug\net6.0-windows\Chess.pdb
+D:\Proiecte\OOP\Chess\Chess\Chess\obj\Debug\net6.0-windows\Chess.genruntimeconfig.cache
+D:\Proiecte\OOP\Chess\Chess\Chess\obj\Debug\net6.0-windows\ref\Chess.dll
