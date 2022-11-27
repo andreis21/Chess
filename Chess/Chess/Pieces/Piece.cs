@@ -8,15 +8,15 @@ namespace Chess.Pieces
 {
     internal abstract class Piece
     {
-        PieceColor color;
-        PieceType type;
+        public int x;
+        public int y;
+        public PieceColor color;
 
-        protected Piece(PieceColor color, PieceType type)
+        protected Piece(PieceColor color)
         {
             this.color = color;
-            this.type = type;
         }
 
-        public abstract string CalculateLegalMoves();
+        public abstract List<string> CalculateLegalMoves();
     }
 }

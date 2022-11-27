@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 
 namespace Chess
 {
-    internal class Table
+    internal class Board
     {
-        private static Table _instance;
+        private static Board _instance;
         public Cell[,] Cells;
+        public PlayerType playerMove { get; set; }
 
-        private Table()
+        private Board()
         {
             Cells = new Cell[8, 8];
             for(int i = 0; i < 8; i++)
@@ -24,28 +25,29 @@ namespace Chess
             }
         }
 
-        public static Table GetInstance()
+        public static Board GetInstance()
         {
             if (_instance == null)
             {
-                _instance = new Table();
+                _instance = new Board();
             }
             return _instance;
         }
 
-        public void SetupTableForColor(PieceColor color)
+        public void SetupBoardForColor(PieceColor color)
         {
             switch (color)
             {
                 case PieceColor.Black:
-                    ParseAndSetupTable("RCBQKBCR/PPPPPPPP/8/8/8/8/pppppppp/rcbqkbcr");
+                    ParseAndSetupBoard("RCBQKBCR/PPPPPPPP/8/8/8/8/pppppppp/rcbqkbcr");
                     break;
                 case PieceColor.White:
+                    ParseAndSetupBoard("rcbqkbcr/pppppppp/8/8/8/8/PPPPPPPP/RCBQKBCR");
                     break;
             }
         }
 
-        public void ParseAndSetupTable(string positionsString)
+        public void ParseAndSetupBoard(string positionsString)
         {
             int row = 0;
             int col = 0;
@@ -104,9 +106,42 @@ namespace Chess
                     default:
                         break;
                 }
+                piece.x = col;
+                piece.y = row;
                 Cells[row, col].Piece = piece;
                 col++;
             }
+        }
+
+        public string StringifyBoard()
+        {
+            string boardString = string.Empty;
+            for(int i = 0; i < 8; i++)
+            {
+                for(int j = 0; j < 8; j++)
+                {
+                    if (Cells[i, j].Piece != null)
+                    {
+                        if (Cells[i, j].Piece.GetType().Name.Equals("Knight") || Cells[i, j].Piece.GetType().Name.Equals("knight"))
+                        {
+                            if(Cells[i, j].Piece.color == PieceColor.Black)
+                            {
+                                boardString += Cells[i, j].Piece.GetType().Name.ToString()[0].ToString().ToLower();
+                            }
+                            continue;
+                        }
+                        if (Cells[i, j].Piece.color == PieceColor.Black)
+                        {
+                            boardString += Cells[i, j].Piece.GetType().Name.ToString()[0].ToString().ToLower();
+                            continue;
+                        }
+                        boardString += Cells[i, j].Piece.GetType().Name.ToString()[0];
+                        continue;
+                    }
+                    boardString += '0';
+                }
+            }
+            return boardString;
         }
     }
 }

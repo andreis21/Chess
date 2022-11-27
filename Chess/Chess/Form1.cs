@@ -6,15 +6,22 @@ namespace Chess
     {
         private PieceColor _pickedColor;
 
+        private Board board;
+        private Panel boardPanel;
+        private TextBox movesTb;
+        private Button[,] cells;
+
+
         public mainWindow()
         {
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.Width = 600;
             this.Height = 400;
+            board = Board.GetInstance();
+            cells = new Button[8, 8];
             RenderMenu();
         }
-
 
         
         // RENDERING
@@ -78,7 +85,74 @@ namespace Chess
 
         private void RenderSingleplayer()
         {
+            this.Width = 1100;
+            this.Height = 900;
+            this.Controls.Clear();
+            this.Refresh();
+            boardPanel = new Panel()
+            {
+                Width = 800,
+                Height = 800,
+                BackColor = Color.LightGray,
+                Location = new Point((int)(this.Width*0.02), (int)(this.Height * 0.02))
+            };
+            movesTb = new TextBox()
+            {
+                Height = 800,
+                Width = 200,
+                BackColor = Color.DarkGray,
+                Location = new Point((int)(this.Width * 0.02 + 820), (int)(this.Height * 0.02)),
+                Multiline = true,
+                ReadOnly = true
+            };
+            this.Controls.Add(boardPanel);
+            this.Controls.Add(movesTb);
+            for(int i = 0; i < 8; i++)
+            {
+                for(int j = 0; j < 8; j++)
+                {
+                    cells[i, j] = new Button()
+                    {
+                        Width = 100,
+                        Height = 100,
+                        Location = new Point(100 * j, 100 * i),
+                        Tag = $"{i}|{j}"
+                    };
+                    cells[i, j].Click += cell_Click;
+                    boardPanel.Controls.Add(cells[i, j]);
+                }
+            }
+            DrawColors();
+            DrawPieces();
+        }
 
+        private void DrawPieces()
+        {
+            for(int i = 0; i < 8; i++)
+            {
+                for(int j = 0; j < 8; j++)
+                {
+                    cells[i, j].Text = board.Cells[i, j].Piece != null ? board.Cells[i, j].Piece.ToString() : string.Empty;
+                }
+            }
+        }
+
+        private void DrawColors()
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    if(i % 2 == 0)
+                    {
+                        cells[i,j].BackColor = j % 2 == 0 ? Color.LightYellow : Color.SaddleBrown;
+                    }
+                    else
+                    {
+                        cells[i, j].BackColor = j % 2 != 0 ? Color.LightYellow : Color.SaddleBrown;
+                    }
+                }
+            }
         }
 
         // BUTTON EVENTS
@@ -99,8 +173,17 @@ namespace Chess
             {
                 _pickedColor = PieceColor.Black;
             }
-            Table table = Table.GetInstance();
-            table.SetupTableForColor(_pickedColor);
+            board.SetupBoardForColor(_pickedColor);
+            RenderSingleplayer();
+        }
+
+        private void cell_Click(object sender, EventArgs e)
+        {
+            board.playerMove = PlayerType.Human;
+            Button pressedButton = (Button)sender;
+            var positions = pressedButton.Tag.ToString().Split('|');
+            var row = Int16.Parse(positions[0]); var col = Int16.Parse(positions[1]);
+            var test = board.Cells[row, col].Piece.CalculateLegalMoves();
         }
     }
 }

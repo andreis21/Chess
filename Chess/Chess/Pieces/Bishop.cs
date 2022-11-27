@@ -8,11 +8,11 @@ namespace Chess.Pieces
 {
     internal class Bishop : Piece
     {
-        public Bishop(PieceColor color) : base(color, PieceType.Bishop)
+        public Bishop(PieceColor color) : base(color)
         {
         }
 
-        public override string CalculateLegalMoves()
+        public override List<string> CalculateLegalMoves()
         {
             throw new NotImplementedException();
         }

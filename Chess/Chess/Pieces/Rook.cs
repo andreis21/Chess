@@ -8,11 +8,11 @@ namespace Chess.Pieces
 {
     internal class Rook : Piece
     {
-        public Rook(PieceColor color) : base(color, PieceType.Rook)
+        public Rook(PieceColor color) : base(color)
         {
         }
 
-        public override string CalculateLegalMoves()
+        public override List<string> CalculateLegalMoves()
         {
             throw new NotImplementedException();
         }
