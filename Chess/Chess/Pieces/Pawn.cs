@@ -19,75 +19,99 @@ namespace Chess.Pieces
             var boardString = board.StringifyBoard();
             int position = 8 * this.y + this.x;
             int distanceUp = Math.Abs(0 - this.y);
-            int distanceDown = Math.Abs(7 - this.x);
+            int distanceDown = Math.Abs(7 - this.y);
             int distanceLeft = Math.Abs(0 - this.x);
             int distanceRight = Math.Abs(7 - this.x);
 
             if(board.playerMove == PlayerType.Human)
             {
-                int nextPoition = position - 8;
-                if (boardString[nextPoition] == '0')
+                if(distanceUp >= 1)
                 {
-                    legalMoves.Add($"{distanceUp - 1},{distanceLeft}");
-                }
-                if(distanceLeft >= 2)
-                {
-                    if(distanceRight <= 2)
+                    int nextPoition = position - 8;
+                    if (boardString[nextPoition] == '0')
                     {
-                        nextPoition = position - 7;
-                        if (boardString[nextPoition] != '0')
+                        legalMoves.Add($"{y},{x}|{distanceUp - 1},{distanceLeft}");
+                    }
+                    if (distanceLeft >= 2)
+                    {
+                        if (distanceRight >= 2)
                         {
-                            if(this.color == PieceColor.White)
+                            nextPoition = position - 7;
+                            if (boardString[nextPoition] != '0')
                             {
-                                if (char.IsLower(boardString[nextPoition]))
+                                if (this.color == PieceColor.White)
                                 {
-                                    legalMoves.Add($"{distanceUp - 2},{distanceLeft + 2}");
+                                    if (char.IsLower(boardString[nextPoition]))
+                                    {
+                                        legalMoves.Add($"{y},{x}|{distanceUp - 1},{distanceLeft + 1}");
+                                    }
+                                }
+                                else
+                                {
+                                    if (char.IsUpper(boardString[nextPoition]))
+                                    {
+                                        legalMoves.Add($"{y},{x}|{distanceUp - 1},{distanceLeft + 1}");
+                                    }
                                 }
                             }
-                            else
+                            nextPoition = position - 9;
+                            if (boardString[nextPoition] != '0')
                             {
-                                if (char.IsUpper(boardString[nextPoition]))
+                                if (this.color == PieceColor.White)
                                 {
-                                    legalMoves.Add($"{distanceUp - 2},{distanceLeft + 2}");
+                                    if (char.IsLower(boardString[nextPoition]))
+                                    {
+                                        legalMoves.Add($"{y},{x}|{distanceUp - 1},{distanceLeft - 1}");
+                                    }
+                                }
+                                else
+                                {
+                                    if (char.IsUpper(boardString[nextPoition]))
+                                    {
+                                        legalMoves.Add($"{y},{x}|{distanceUp - 1},{distanceLeft - 1}");
+                                    }
                                 }
                             }
                         }
-                        nextPoition = position - 9;
-                        if (boardString[nextPoition] != '0')
+                        else
                         {
-                            if (this.color == PieceColor.White)
+                            nextPoition = position - 9;
+                            if (boardString[nextPoition] != '0')
                             {
-                                if (char.IsLower(boardString[nextPoition]))
+                                if (this.color == PieceColor.White)
                                 {
-                                    legalMoves.Add($"{distanceUp - 2},{distanceLeft - 2}");
+                                    if (char.IsLower(boardString[nextPoition]))
+                                    {
+                                        legalMoves.Add($"{y},{x}|{distanceUp - 1},{distanceLeft - 1}");
+                                    }
                                 }
-                            }
-                            else
-                            {
-                                if (char.IsUpper(boardString[nextPoition]))
+                                else
                                 {
-                                    legalMoves.Add($"{distanceUp - 2},{distanceLeft - 2}");
+                                    if (char.IsUpper(boardString[nextPoition]))
+                                    {
+                                        legalMoves.Add($"{y},{x}|{distanceUp - 1},{distanceLeft - 1}");
+                                    }
                                 }
                             }
                         }
                     }
                     else
                     {
-                        nextPoition = position - 9;
+                        nextPoition = position - 7;
                         if (boardString[nextPoition] != '0')
                         {
                             if (this.color == PieceColor.White)
                             {
                                 if (char.IsLower(boardString[nextPoition]))
                                 {
-                                    legalMoves.Add($"{distanceUp - 2},{distanceLeft - 2}");
+                                    legalMoves.Add($"{y},{x}|{distanceUp - 1},{distanceLeft + 1}");
                                 }
                             }
                             else
                             {
                                 if (char.IsUpper(boardString[nextPoition]))
                                 {
-                                    legalMoves.Add($"{distanceUp - 2},{distanceLeft - 2}");
+                                    legalMoves.Add($"{y},{x}|{distanceUp - 1},{distanceLeft + 1}");
                                 }
                             }
                         }
@@ -96,6 +120,98 @@ namespace Chess.Pieces
             }
             else
             {
+                if(distanceDown >= 1)
+                {
+                    int nextPoition = position + 8;
+                    if (boardString[nextPoition] == '0')
+                    {
+                        legalMoves.Add($"{y},{x}|{distanceUp + 1},{distanceLeft}");
+                    }
+                    if (distanceLeft >= 2)
+                    {
+                        if (distanceRight >= 2)
+                        {
+                            nextPoition = position + 9;
+                            if (boardString[nextPoition] != '0')
+                            {
+                                if (this.color == PieceColor.White)
+                                {
+                                    if (char.IsLower(boardString[nextPoition]))
+                                    {
+                                        legalMoves.Add($"{y},{x}|{distanceUp + 1},{distanceLeft + 1}");
+                                    }
+                                }
+                                else
+                                {
+                                    if (char.IsUpper(boardString[nextPoition]))
+                                    {
+                                        legalMoves.Add($"{y},{x}|{distanceUp + 1},{distanceLeft + 1}");
+                                    }
+                                }
+                            }
+                            nextPoition = position + 7;
+                            if (boardString[nextPoition] != '0')
+                            {
+                                if (this.color == PieceColor.White)
+                                {
+                                    if (char.IsLower(boardString[nextPoition]))
+                                    {
+                                        legalMoves.Add($"{y},{x}|{distanceUp + 1},{distanceLeft - 1}");
+                                    }
+                                }
+                                else
+                                {
+                                    if (char.IsUpper(boardString[nextPoition]))
+                                    {
+                                        legalMoves.Add($"{y},{x}|{distanceUp + 1},{distanceLeft - 1}");
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            nextPoition = position + 7;
+                            if (boardString[nextPoition] != '0')
+                            {
+                                if (this.color == PieceColor.White)
+                                {
+                                    if (char.IsLower(boardString[nextPoition]))
+                                    {
+                                        legalMoves.Add($"{y},{x}|{distanceUp + 1},{distanceLeft - 1}");
+                                    }
+                                }
+                                else
+                                {
+                                    if (char.IsUpper(boardString[nextPoition]))
+                                    {
+                                        legalMoves.Add($"{y},{x}|{distanceUp + 1},{distanceLeft - 1}");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        nextPoition = position + 9;
+                        if (boardString[nextPoition] != '0')
+                        {
+                            if (this.color == PieceColor.White)
+                            {
+                                if (char.IsLower(boardString[nextPoition]))
+                                {
+                                    legalMoves.Add($"{y},{x}|{distanceUp + 1},{distanceLeft + 1}");
+                                }
+                            }
+                            else
+                            {
+                                if (char.IsUpper(boardString[nextPoition]))
+                                {
+                                    legalMoves.Add($"{y},{x}|{distanceUp + 1},{distanceLeft + 1}");
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
             return legalMoves;

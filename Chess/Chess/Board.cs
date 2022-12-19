@@ -47,6 +47,13 @@ namespace Chess
             }
         }
 
+        public void MovePiece(int moveFromX, int moveFromY, int moveToX, int moveToY)
+        {
+            Cells[moveToY, moveToX].Piece = Cells[moveFromY, moveFromX].Piece;
+            Cells[moveFromY, moveFromX].Piece = null;
+            Cells[moveToY, moveToX].Piece.x = moveToX; Cells[moveToY, moveToX].Piece.y = moveToY;
+        }
+
         public void ParseAndSetupBoard(string positionsString)
         {
             int row = 0;
@@ -128,6 +135,10 @@ namespace Chess
                             {
                                 boardString += Cells[i, j].Piece.GetType().Name.ToString()[0].ToString().ToLower();
                             }
+                            else
+                            {
+                                boardString += Cells[i, j].Piece.GetType().Name.ToString()[0].ToString().ToUpper();
+                            }
                             continue;
                         }
                         if (Cells[i, j].Piece.color == PieceColor.Black)
@@ -142,6 +153,25 @@ namespace Chess
                 }
             }
             return boardString;
+        }
+
+        public List<string> CalculateAllLegalMovesByColor(PieceColor color)
+        {
+            List<string> legalMoves = new List<string>();
+            for(int i = 0; i <= 7; i++)
+            {
+                for(int j = 0; j <= 7; j++)
+                {
+                    if(Cells[i, j].Piece != null)
+                    {
+                        if (Cells[i, j].Piece.color == color)
+                        {
+                            legalMoves.AddRange(Cells[i, j].Piece.CalculateLegalMoves());
+                        }
+                    }
+                }
+            }
+            return legalMoves;
         }
     }
 }

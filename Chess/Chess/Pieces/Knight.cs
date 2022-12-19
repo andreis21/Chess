@@ -15,7 +15,8 @@ namespace Chess.Pieces
 
         public override List<string> CalculateLegalMoves()
         {
-            throw new NotImplementedException();
+            List<string> legalMoves = new List<string>();
+            return legalMoves;
         }
     }
 }

@@ -10,7 +10,8 @@ namespace Chess
         private Panel boardPanel;
         private TextBox movesTb;
         private Button[,] cells;
-
+        private Button _selectedPiece;
+        private Random _rand;
 
         public mainWindow()
         {
@@ -20,6 +21,7 @@ namespace Chess
             this.Height = 400;
             board = Board.GetInstance();
             cells = new Button[8, 8];
+            _rand = new Random();
             RenderMenu();
         }
 
@@ -181,9 +183,99 @@ namespace Chess
         {
             board.playerMove = PlayerType.Human;
             Button pressedButton = (Button)sender;
-            var positions = pressedButton.Tag.ToString().Split('|');
-            var row = Int16.Parse(positions[0]); var col = Int16.Parse(positions[1]);
-            var test = board.Cells[row, col].Piece.CalculateLegalMoves();
+            if(pressedButton.BackColor == Color.Cyan)
+            {
+                MovePiece(pressedButton);
+                DrawColors();
+                DrawPieces();
+                DisableButtons();
+                board.playerMove = PlayerType.Computer;
+                ComputerMove();
+            }
+            else
+            {
+                DrawColors();
+                if(pressedButton.Text != string.Empty)
+                {
+                    var positions = pressedButton.Tag.ToString().Split('|');
+                    var row = Int16.Parse(positions[0]); var col = Int16.Parse(positions[1]);
+                    if (board.Cells[row,col].Piece.color == _pickedColor)
+                    {
+                        var pseudoLegalMoves = board.Cells[row, col].Piece.CalculateLegalMoves();
+                        foreach (var move in pseudoLegalMoves)
+                        {
+                            var wholeMove = move.Split('|');
+                            var position = wholeMove[1].Split(',');
+                            int x = Int16.Parse(position[1]); int y = Int16.Parse(position[0]);
+                            cells[y, x].BackColor = Color.Cyan;
+                        }
+                        _selectedPiece = pressedButton;
+                    }
+                }
+                else
+                {
+                    _selectedPiece = null;
+                }
+            }
+        }
+
+        // HELPERS
+
+        private void MovePiece(Button locationToMove)
+        {
+            var positionFrom = _selectedPiece.Tag.ToString().Split('|');
+            var positionTo = locationToMove.Tag.ToString().Split('|');
+            int positionFromX = Int16.Parse(positionFrom[1]); int positionFromY = Int16.Parse(positionFrom[0]);
+            int positionToX = Int16.Parse(positionTo[1]); int positionToY = Int16.Parse(positionTo[0]);
+            board.MovePiece(positionFromX, positionFromY, positionToX, positionToY);
+        }
+
+        private void MovePieceForComputer(int positionFromX, int positionFromY, int positionToX, int positionToY)
+        {
+            board.MovePiece(positionFromX, positionFromY, positionToX, positionToY);
+        }
+
+        private void ComputerMove()
+        {
+            List<string> legalMoves = new List<string>();
+            if (_pickedColor == PieceColor.White)
+            {
+                legalMoves = board.CalculateAllLegalMovesByColor(PieceColor.Black);
+            }
+            else
+            {
+                legalMoves = board.CalculateAllLegalMovesByColor(PieceColor.White);
+            }
+            string selectedMove = legalMoves[_rand.Next(legalMoves.Count)];
+            var moveFrom = selectedMove.Split('|')[0].Split(',');
+            var moveTo = selectedMove.Split('|')[1].Split(',');
+            int moveFromX = Int16.Parse(moveFrom[1]); int moveFromY = Int16.Parse(moveFrom[0]);
+            int moveToX = Int16.Parse(moveTo[1]); int moveToY = Int16.Parse(moveTo[0]);
+            MovePieceForComputer(moveFromX, moveFromY, moveToX, moveToY);
+            DrawPieces();
+            EnableButtons();
+        }
+
+        private void DisableButtons()
+        {
+            for (int i = 0; i <= 7; i++)
+            {
+                for (int j = 0; j <= 7; j++)
+                {
+                    cells[i, j].Enabled = false;
+                }
+            }
+        }
+
+        private void EnableButtons()
+        {
+            for (int i = 0; i <= 7; i++)
+            {
+                for (int j = 0; j <= 7; j++)
+                {
+                    cells[i, j].Enabled = true;
+                }
+            }
         }
     }
 }
